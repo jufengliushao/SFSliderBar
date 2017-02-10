@@ -19,7 +19,7 @@
     CGFloat _lineHeight;
     CGFloat _btnSpace;
     CGFloat _btnLeftSpace;
-    
+    NSInteger _sliderSelected;
     CGFloat _totalWidth;
 }
 
@@ -42,6 +42,7 @@ static long long itemTagBase = 11000;
         _btnSpace = 20;
         _btnLeftSpace = 20;
         _totalWidth = 0;
+        _sliderSelected = 0;
     }
     return self;
 }
@@ -90,6 +91,9 @@ static long long itemTagBase = 11000;
     _btnLeftSpace = itemLeftSpace;
 }
 
+- (void)setSelectedIndex:(NSInteger)selectedIndex{
+    _sliderSelected = selectedIndex;
+}
 #pragma mark - method
 - (void)creatItems{
     for (NSString *title in self.titleArr) {
@@ -122,9 +126,10 @@ static long long itemTagBase = 11000;
     for (UIButton *btn in _btnArr) {
         CGFloat width = [self returnTitleWidthWithTitle:[btn titleForState:(UIControlStateNormal)]];
         btn.frame = CGRectMake((width + _btnSpace) * index + _btnLeftSpace, 0, width, self.bounds.size.height - _lineHeight);
-        if (index == 0) {
+        if (index == _sliderSelected) {
             btn.selected = YES;
-            _lineView.frame = CGRectMake(_btnLeftSpace, btn.frame.origin.y + btn.bounds.size.height, btn.bounds.size.width, _lineHeight);
+            [self resetSelectedIndexWithIndex:_sliderSelected];
+            _lineView.frame = CGRectMake(btn.frame.origin.x, btn.frame.origin.y + btn.bounds.size.height, btn.bounds.size.width, _lineHeight);
             if (![self.subviews containsObject:_lineView]) {
                 [self addSubview:_lineView];
             }

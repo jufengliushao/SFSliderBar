@@ -53,6 +53,11 @@ typedef void(^SelectAction)(NSInteger index);
  */
 @property (nonatomic, copy) SelectAction selectAction;
 
+/**
+ 选中的下标
+ */
+@property (nonatomic, assign) NSInteger selectedIndex;
+
 
 /**
  scrollerView滑动 更改下划线位置
